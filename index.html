@@ -49,6 +49,35 @@
   .warn { margin-top: .8rem; font-size: .8rem; color: var(--muted); }
   #result { margin-top: 1rem; padding: .7rem; border-radius: 8px; background: #060d26; border: 1px solid var(--line);
     font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .85rem; white-space: pre-wrap; display: none; }
+  a.plugin { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.2rem; text-decoration: none; color: var(--fg);
+    background: linear-gradient(135deg, #0f2a6b, #0b1433); border: 1px solid var(--glow); border-radius: 14px;
+    box-shadow: 0 0 18px rgba(30,107,255,.25); transition: transform .15s, border-color .15s, box-shadow .15s; }
+  a.plugin:hover, a.plugin:active { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 0 22px rgba(255,138,31,.35); }
+  a.plugin .wp { width: 52px; height: 52px; flex: none; color: #4aa3ff; }
+  a.plugin .txt { flex: 1; display: flex; flex-direction: column; gap: .15rem; }
+  a.plugin strong { font-size: 1.05rem; line-height: 1.25; }
+  a.plugin small { color: var(--muted); font-size: .85rem; }
+  a.plugin .go { font-size: 1.6rem; color: var(--accent); }
+  details.waf { grid-column: 1 / -1; background: linear-gradient(135deg, #0f2a6b, #0b1433); border: 1px solid var(--glow);
+    border-radius: 14px; box-shadow: 0 0 18px rgba(30,107,255,.25); transition: border-color .15s, box-shadow .15s; }
+  details.waf[open] { border-color: var(--accent); box-shadow: 0 0 22px rgba(255,138,31,.3); }
+  details.waf > summary { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.2rem; list-style: none; cursor: pointer; }
+  details.waf > summary::-webkit-details-marker { display: none; }
+  details.waf .shield { width: 52px; height: 52px; flex: none; color: #4aa3ff; }
+  details.waf .txt { flex: 1; display: flex; flex-direction: column; gap: .15rem; }
+  details.waf strong { font-size: 1.05rem; line-height: 1.25; }
+  details.waf small { display: block; color: var(--muted); font-size: .85rem; font-weight: 400; }
+  details.waf .go { font-size: 1.3rem; color: var(--accent); transition: transform .2s; }
+  details.waf[open] .go { transform: rotate(180deg); }
+  details.waf form { padding: 0 1.2rem 1.2rem; }
+  details.waf label { margin-top: 0; }
+  details.waf input { margin-top: .4rem; padding: .8rem; border: 1px solid var(--glow); border-radius: 10px;
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1rem; }
+  details.waf input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,138,31,.25); }
+  details.waf button { width: 100%; margin-top: .9rem; padding: .85rem; border: 0; border-radius: 10px; background: var(--accent);
+    color: #1a0c00; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: filter .15s, transform .1s; }
+  details.waf button:hover { filter: brightness(1.1); }
+  details.waf button:active { transform: scale(.98); }
 </style>
 </head>
 <body>
@@ -69,20 +98,36 @@
   <details class="sec" id="labs">
     <summary>Hacktiba Labs</summary>
     <div class="grid">
-      <details class="card">
-        <summary>Teste de WAF <small>Envie o payload de teste via POST para validar as regras do WAF</small></summary>
-        <form method="POST" action="" target="_blank">
-          <label>Payload
-            <input type="text" name="payload" value="&lt;script&gt;alert(1)&lt;/script&gt;" readonly>
-          </label>
-          <div class="chips"><button type="submit">Enviar</button></div>
+      <details class="waf">
+        <summary>
+          <svg class="shield" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 4l16 6v12c0 10-6.5 18.5-16 22C14.5 40.5 8 32 8 22V10l16-6z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M16.5 24l5.5 5.5L32 18.5" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="txt">
+            <strong>Teste de WAF</strong>
+            <small>Envie um texto via POST para validar as regras do WAF</small>
+          </span>
+          <span class="go" aria-hidden="true">&#9662;</span>
+        </summary>
+        <form method="POST" action="https://www.hacktiba.com.br/" target="_blank">
+          <label for="payload">Texto a enviar</label>
+          <input id="payload" type="text" name="payload" placeholder="Digite algo para enviar" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button type="submit">Enviar</button>
         </form>
       </details>
 
-      <div class="card">
-        <h3>Contexto de Segurança de Plugins WordPress</h3>
-        <p><a href="https://hacktiba.github.io" target="_blank" rel="noopener">hacktiba.github.io</a></p>
-      </div>
+      <a class="plugin" href="https://hacktiba.github.io" target="_blank" rel="noopener">
+        <svg class="wp" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="3"/>
+          <path d="M11 17l7.5 20 5.5-15 5.5 15 7.5-20" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="txt">
+          <strong>Contexto de Segurança de Plugins WordPress</strong>
+          <small>hacktiba.github.io</small>
+        </span>
+        <span class="go" aria-hidden="true">&rarr;</span>
+      </a>
     </div>
   </details>
 
