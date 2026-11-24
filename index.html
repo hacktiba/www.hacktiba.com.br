@@ -109,6 +109,13 @@
   .lang button:hover { opacity: 1; transform: scale(1.08); }
   .lang button[aria-pressed="true"] { opacity: 1; border-color: var(--accent); box-shadow: 0 0 10px rgba(255,138,31,.5); }
   .lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  a.mail { display: flex; align-items: center; justify-content: center; gap: .6rem; margin-top: 1rem; padding: .85rem 1rem;
+    border-radius: 12px; background: var(--accent); color: #1a0c00; font-weight: 800; font-size: 1.05rem; text-decoration: none;
+    box-shadow: 0 0 18px rgba(255,138,31,.35); transition: filter .15s, transform .1s; }
+  a.mail:hover { filter: brightness(1.1); }
+  a.mail:active { transform: scale(.98); }
+  a.mail svg { width: 24px; height: 24px; flex: none; }
+  a.mail span { white-space: nowrap; word-break: normal; }
 </style>
 </head>
 <body>
@@ -184,7 +191,11 @@
     <summary data-i18n="help">I Need Help</summary>
     <div class="card">
       <h3 data-i18n="helpTitle">I have Cyber Security Challenges</h3>
-      <p><span data-i18n="helpText">Envie os desafios que você possui atualmente para encontrarmos a melhor solução para o seu contexto:</span> <a href="mailto:hacktiba@gmail.com">hacktiba@gmail.com</a></p>
+      <p data-i18n="helpText">Envie os desafios que você possui atualmente para encontrarmos a melhor solução para o seu contexto:</p>
+      <a class="mail" href="mailto:hacktiba@gmail.com?subject=Desafios%20de%20Ciberseguran%C3%A7a">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 7.5l8.5 6 8.5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>hacktiba@gmail.com</span>
+      </a>
     </div>
   </details>
 </main>
@@ -233,7 +244,8 @@
       plugin: "Contexto de Segurança de Plugins WordPress",
       helpTitle: "I have Cyber Security Challenges",
       helpText: "Envie os desafios que você possui atualmente para encontrarmos a melhor solução para o seu contexto:",
-      social: "Redes sociais"
+      social: "Redes sociais",
+      mailSubject: "Desafios de Cibersegurança"
     },
     en: {
       tagline: "Events, Training and Cybersecurity Consulting Hub",
@@ -247,7 +259,8 @@
       plugin: "WordPress Plugin Security Context",
       helpTitle: "I have Cyber Security Challenges",
       helpText: "Send us the challenges you currently have so we can find the best solution for your context:",
-      social: "Social media"
+      social: "Social media",
+      mailSubject: "Cybersecurity Challenges"
     },
     es: {
       tagline: "Hub de Eventos, Capacitaciones y Consultoría en Ciberseguridad",
@@ -261,7 +274,8 @@
       plugin: "Contexto de Seguridad de Plugins de WordPress",
       helpTitle: "Tengo desafíos de ciberseguridad",
       helpText: "Envía los desafíos que tienes actualmente para que encontremos la mejor solución para tu contexto:",
-      social: "Redes sociales"
+      social: "Redes sociales",
+      mailSubject: "Desafíos de ciberseguridad"
     },
     fr: {
       tagline: "Hub d’événements, de formations et de conseil en cybersécurité",
@@ -275,9 +289,11 @@
       plugin: "Contexte de sécurité des plugins WordPress",
       helpTitle: "J’ai des défis en cybersécurité",
       helpText: "Envoyez-nous les défis que vous rencontrez actuellement afin que nous trouvions la meilleure solution pour votre contexte :",
-      social: "Réseaux sociaux"
+      social: "Réseaux sociaux",
+      mailSubject: "Défis en cybersécurité"
     }
   };
+  var MAIL = "hacktiba@gmail.com";
   var HTML_LANG = { pt: "pt-BR", en: "en", es: "es", fr: "fr" };
 
   function apply(lang) {
@@ -292,6 +308,8 @@
       var k = el.getAttribute("data-i18n-ph");
       if (Object.prototype.hasOwnProperty.call(d, k)) el.setAttribute("placeholder", d[k]);
     });
+    var mail = document.querySelector("a.mail");
+    if (mail) mail.setAttribute("href", "mailto:" + MAIL + "?subject=" + encodeURIComponent(d.mailSubject));
     document.querySelectorAll(".lang button").forEach(function (b) {
       b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
     });
